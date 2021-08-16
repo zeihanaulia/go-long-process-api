@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"log"
 	"net/http"
@@ -35,16 +34,11 @@ func updaterHandler(rw http.ResponseWriter, r *http.Request) {
 	defer span.Finish()
 
 	// Process
-	go func(span opentracing.Span) {
-		ctx := context.Background() // recreate context for avoid cancelation
-		ctx = opentracing.ContextWithSpan(ctx, span)
-
-		svc := service.NewService()
-		if err := svc.Updater(ctx, &service.UpdaterRequest{}); err != nil {
-			response.NewJSONResponse().SetError(response.ErrInternalServer)
-			return
-		}
-	}(span)
+	svc := service.NewService()
+	if err := svc.Updater(ctx, &service.UpdaterRequest{}); err != nil {
+		response.NewJSONResponse().SetError(response.ErrInternalServer)
+		return
+	}
 
 	var traceID string
 	if sc, ok := span.Context().(jaeger.SpanContext); ok {
