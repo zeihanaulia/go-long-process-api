@@ -9,8 +9,8 @@ import (
 	"net/http"
 
 	"github.com/opentracing/opentracing-go"
-	"github.com/zeihanaulia/go-task-processor/pkg/tracing"
-	"github.com/zeihanaulia/go-task-processor/service"
+	"github.com/zeihanaulia/go-long-process-api/pkg/tracing"
+	"github.com/zeihanaulia/go-long-process-api/service"
 	"syreclabs.com/go/faker"
 )
 

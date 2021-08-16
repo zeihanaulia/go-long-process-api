@@ -11,7 +11,7 @@ build:
 .PHONY: run
 run: build
 	@echo "  >  Starting Program..."
-	./bin/${PROJECTNAME}
+	./bin/${PROJECTNAME} api
 	@echo "Process took $$(($$(date +%s)-$(STIME))) seconds"
 
 ## simulate: start without docker
