@@ -8,6 +8,7 @@ import (
 	"github.com/go-chi/chi/middleware"
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
+	"github.com/uber/jaeger-client-go"
 	"github.com/zeihanaulia/go-task-processor/pkg/response"
 	"github.com/zeihanaulia/go-task-processor/pkg/tracing"
 	"github.com/zeihanaulia/go-task-processor/service"
@@ -29,7 +30,7 @@ func main() {
 
 func updaterHandler(rw http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
-	span, ctx := opentracing.StartSpanFromContext(ctx, "handler.product.updater")
+	span, _ := opentracing.StartSpanFromContext(ctx, "handler.product.updater")
 	defer span.Finish()
 
 	// Process
@@ -39,10 +40,17 @@ func updaterHandler(rw http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var traceID string
+	if sc, ok := span.Context().(jaeger.SpanContext); ok {
+		traceID = sc.TraceID().String()
+	}
+
 	resp := struct {
-		Status string `json:"status"`
+		Status  string `json:"status"`
+		TraceID string `json:"trace_id"`
 	}{
-		Status: "ok",
+		Status:  "ok",
+		TraceID: traceID,
 	}
 	response.NewJSONResponse().SetBody(resp).WriteResponse(rw)
 }

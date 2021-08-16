@@ -9,7 +9,7 @@ Hal ini menyebabkan API yang diconsume oleh client menjadi lambat atau parahnya 
 
 ## Approach Solutions
 
-- Async (Background Processing)
+- [Async (Background Processing)](https://github.com/zeihanaulia/go-long-process-api/tree/01-async)
 - Async + Task/Job Runner
 - Async + Queue Messaging System
 

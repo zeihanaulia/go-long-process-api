@@ -29,7 +29,7 @@ func (s *service) updateToDB(ctx context.Context) error {
 	defer span.Finish()
 
 	// Simulate process db
-	time.Sleep(500 * time.Millisecond)
+	time.Sleep(5000 * time.Millisecond)
 	return nil
 }
 
@@ -38,6 +38,6 @@ func (s *service) updateToElastic(ctx context.Context) error {
 	defer span.Finish()
 
 	// Simulate process elasticsearch
-	time.Sleep(500 * time.Millisecond)
+	time.Sleep(5000 * time.Millisecond)
 	return nil
 }
